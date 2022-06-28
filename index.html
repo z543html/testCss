@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+  <script>
+    // VConsole will be exported to `window.VConsole` by default.
+    var vConsole = new window.VConsole();
+    console.log('vConsole',vConsole)
+  </script>
+  <script>
+    (function(win) {
+				var docEl = win.document.documentElement,
+					tid;
+				function refreshRem() {
+					var width = docEl.getBoundingClientRect().width;
+          var documentWidth = document.documentElement.clientWidth;
+          var w=window.screen.width;
+
+					console.log("getBoundingClientRect输出屏宽",width);
+          console.log("clientWidth输出屏宽",documentWidth);
+          console.log("screen输出屏宽",w)
+
+					var rem = width / 750 * 100; //以750px为原稿，除以100可得各元素的rem
+          console.log('rem',rem)
+					docEl.style.fontSize = rem + "px";
+					var actualSize = parseFloat(window.getComputedStyle(docEl)["font-size"]);
+					//console.log("获取")
+					//console.log(actualSize)
+					if (actualSize !== rem) {
+						var remScaled = rem / (actualSize / rem);
+						docEl.style.fontSize = remScaled + "px"
+					}
+				}
+			win.dbcRefresh=function dbcRefresh() {
+					clearTimeout(tid);
+					tid = setTimeout(refreshRem, 100)
+				}
+				win.addEventListener("resize", function() {
+					console.log("resize")
+					dbcRefresh()
+				}, false);
+				win.addEventListener("pageshow", function(e) {
+					console.log("pageshow")
+					if (e.persisted) {
+						dbcRefresh()
+					}
+				}, false);
+				refreshRem();
+			})(window);
+  </script>
+  <style>
+    .box {
+      width: 7.2rem;
+      height: 1rem;
+      margin: 0 auto;
+      background-color: blue;
+      font-size: 0.28rem;
+      color: yellow;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">我是盒子宽7.2rem</div>
+</body>
+</html>
