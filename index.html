@@ -191,6 +191,37 @@
           return val;
         };
       })(window, window['lib'] || (window['lib'] = {}));
+
+
+
+      var width = window.document.documentElement.getBoundingClientRect().width;
+      var documentWidth = document.documentElement.clientWidth;
+      var w = window.screen.width;
+      var innerWidth = window.innerWidth;
+      var offsetWidth = document.documentElement.offsetWidth;
+      var availWidth = window.screen.availWidth;
+      console.log("getBoundingClientRect输出屏宽",width);
+      console.log("clientWidth输出屏宽",documentWidth);
+      console.log("screen输出屏宽",w)
+      console.log("innerWidth输出屏宽",innerWidth);
+      console.log("offsetWidth输出屏宽",offsetWidth);
+      console.log("availWidth输出屏宽",availWidth);
+
+      setTimeout(() => {
+        width = window.document.documentElement.getBoundingClientRect().width;
+        documentWidth = document.documentElement.clientWidth;
+        w = window.screen.width;
+        innerWidth = window.innerWidth;
+        offsetWidth = document.documentElement.offsetWidth;
+        availWidth = window.screen.availWidth;
+        console.log("2getBoundingClientRect输出屏宽",width);
+        console.log("2clientWidth输出屏宽",documentWidth);
+        console.log("2screen输出屏宽",w)
+        console.log("2innerWidth输出屏宽",innerWidth);
+        console.log("2offsetWidth输出屏宽",offsetWidth);
+        console.log("2availWidth输出屏宽",availWidth);
+      }, 3000);
+
     </script>
     <style>
       body,
