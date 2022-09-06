@@ -238,6 +238,13 @@
         }
       }
       console.log('navigator.userAgent',navigator.userAgent)
+      var browserRule = /^.*((iPhone)|(iPad)|(Safari))+.*$/;
+      if (browserRule.test(navigator.userAgent)) {
+          window.onpageshow = function(event) {
+              console.log('onpageshow',onpageshow)
+                  // window.location.reload()
+          };
+      }
     </script>
     <style>
       body,
