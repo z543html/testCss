@@ -221,7 +221,22 @@
         console.log("2offsetWidth输出屏宽",offsetWidth);
         console.log("2availWidth输出屏宽",availWidth);
       }, 3000);
-
+      function downloadImg(e) {
+        console.log('%O',e);
+        var url = e.src;
+        if (url) {
+          // 生成一个a元素
+          let a = document.createElement('a')
+          // 创建一个单击事件
+          let event = new MouseEvent('click')
+          // 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称
+          a.download = '分享图片'//name || Math.random().toString(16).substr(2, 8)
+          // 将生成的URL设置为a.href属性
+          a.href = url
+          // 触发a的单击事件
+          a.dispatchEvent(event)
+        }
+      }
     </script>
     <style>
       body,
@@ -243,5 +258,6 @@
   </head>
   <body>
     <div class="box">我是盒子宽7.2rem</div>
+    <img onclick="downloadImg(this)" src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAPASURBVHgB7VlbUtswFD0KkH41zQ7wDkpXUHcFsAPCCgh/zBQSJ7TfhR2kOwgrKKyg6QrqrqD08dWhUe+VHEtynNhyHEJnODOK5Yek4+ur+wrwhPVCoA68k7v4g5B6Ac0YOPckYvqd4C+19+IbVkR1wufyNZEJ0UAHyJBcjJjG3GCKqCp5f8JMFLSgUBKtDokxEe/6Ei9PuCvbeI4+jejm3L2j6xPwp5dKij+S2V8kKrJH1/bo2MY88RF+4QSX4g61ET6XL+nJMbKfXtDnFRgoolGJBSN5QAQPqR1k7sSk42EZaRcT7sl9+h3Bls6MaCRuUAWRDIh0n1rHusov3MFQXC8bKkqQHWcm7dKkH1EHevKQfi9hC4M38oW4XTRkMeFTkkITn63JYjoPcba6aXLA0p7iE4y63SWkv+Q93sidhDdYU02yXrKMSMTE4o1aQ6Ot9gtzQFnCbA3sN/Yly4stWBDLSc82bpBwQDFhVgXXdHW9yPbkMVr4Su276vuQZvs+A3PQNr+A8I71ZoKsg/8Gi2BUKYIPhuJKWSB3LgcuYS3dTnq+47ngPEo5AwdbjpRD5QMsuISf4dh6eFxpk7FT0F4vztjZcuiRSbOlnHEy25nFQqs/RhVoG/oKq4ClfJ+Q1sHVYHbLSJjVAcrfa/zENTaFKdgGG4thWRwj4SaMrnAIWDIYSXEuP8wFRpK82IU4gS84LunLSfrFW2BroQRo63Bg9SfwRV4Ulx/ZlYXNIZh1GtbkgdX3391Y2aK4kBYHmUfYjVVj+GIoBtSEanVAwliohuHWwH8Gm7CtBgE2DYHdtD813AxhaamBeBSE7YQhnnVtCacXk/xr0zActF1WMIQbuHUe9gkP60ZEa9te97cxcYawTiKN7WthH5vC1Fl7YjuxrJUw8UOVwKUuCGftkX3LJdzAlTUozAug145TlVGH6XnTDcJcwqwWBQH02tHEYdrnBCIT4s47DoEjqx96pTlm3KU6yuTog20l0Vi1nAQi3432KfKSaeCyNO1+aOS7Zl1+ipMznXa/lbt4BMgnzLqcTbu3SLcz+dUmsDj44bR7W+1WQ5pztTPZxwZRHAoOSar3c5VLnWAuqYEthakxt5N5Su+PcrHrfP1LQ6oq5ohKpTeFpVJ29a2k1GoXw3n8QByhVsIz9JQ6RAvu6mK2yKRXHPnpYGpRQHVQVGJ1p/NFfm3XHyxZtrNn6/rLIAutJvvK75cNR9mLshpxCFCmYp87RR2IVCi6Ry/AZq+dBN/tJClgE8mbalKV5BMeEv8AkWU3lligmfYAAAAASUVORK5CYII=' />
   </body>
 </html>
