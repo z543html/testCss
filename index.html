@@ -15,7 +15,7 @@
 </head>
 <body>
   <div>测试</div>
-  <button onclick="toApp()">唤起5</button>
+  <button onclick="toApp()">唤起6</button>
   <br>
   <br>
   <br>
@@ -33,10 +33,7 @@
       location.href = url + '?vtime=' + new Date().getTime();
       console.log('ios_new_url',url)
       console.log('window.location.href',window.location)
-      setTimeout(function (){
-        console.log('toApp')
-        window.location.href = OldUrl + '?vtime=' + new Date().getTime();
-      },2000);
+      toApp3()
       // var it = setInterval(() => {
       //   clearInterval(it)
       //   console.log('ios_old_url',OldUrl)
