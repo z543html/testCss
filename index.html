@@ -15,7 +15,7 @@
 </head>
 <body>
   <div>测试</div>
-  <button onclick="toApp()">唤起</button>
+  <button onclick="toApp()">唤起1</button>
   <br>
   <br>
   <br>
@@ -52,20 +52,12 @@
       var timeOut = 2000;
       var timer,start = new Date().getTime();
       timer = setTimeout(function (){
-          let end = new Date().getTime();
-          if(end - start > timeOut + 1000){
-            console.log('clearTimeout')
-            clearTimeout(timer);
-          }else {
-            var hidden = window.document.hidden || window.document.mozHidden || window.document.msHidden ||window.document.webkitHidden;
-            console.log('setTimeout1')
-            if(typeof hidden =="undefined" || hidden == false){
-              console.log('setTimeout2')
-              if (fn && typeof fn === 'function') {
-                fn();
-              }
-            }
-          };
+        if(typeof hidden =="undefined" || hidden == false){
+          console.log('setTimeout2')
+          if (fn && typeof fn === 'function') {
+            fn();
+          }
+        }
       },timeOut);
     };
   </script>
