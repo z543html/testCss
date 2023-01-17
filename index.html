@@ -18,6 +18,15 @@
   <button onclick="toApp()">唤起6</button>
   <br>
   <br>
+  <button onclick="toAppa()">唤起open</button>
+  <br>
+  <br>
+  <button onclick="toAppb()">唤起top</button>
+  <br>
+  <br>
+  <button onclick="toAppc()">唤起self</button>
+  <br>
+  <br>
   <br>
   <button onclick="toApp1()">唤起新版</button>
   <br>
@@ -34,22 +43,30 @@
       console.log('ios_new_url',url)
       console.log('window.location.href',window.location)
       toApp3()
-      // var it = setInterval(() => {
-      //   clearInterval(it)
-      //   console.log('ios_old_url',OldUrl)
-      //   window.location.href = OldUrl + '?vtime=' + new Date().getTime();
-      // }, 3000);
-      // handleJumpAppTimeout(function () {
-      //   console.log('ios_old_url',OldUrl)
-      //   window.location.href = OldUrl + '?vtime=' + new Date().getTime();
-      //   console.log('document.readyState',document.readyState)
-      //   setTimeout(function (){
-      //     console.log('setTimeout2')
-      //     console.log('document.readyState1',document.readyState)
-      //     window.location.href = OldUrl + '?vtime=' + new Date().getTime();
-      //   },100);
-      // })
-
+    };
+    function toAppa() {
+      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
+      var OldUrl = 'gmcchhapp://main'
+      location.href = url + '?vtime=' + new Date().getTime();
+      console.log('ios_new_url',url)
+      console.log('window.location.href',window.location)
+      toApp31()
+    };
+    function toAppb() {
+      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
+      var OldUrl = 'gmcchhapp://main'
+      location.href = url + '?vtime=' + new Date().getTime();
+      console.log('ios_new_url',url)
+      console.log('window.location.href',window.location)
+      toApp32()
+    };
+    function toAppc() {
+      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
+      var OldUrl = 'gmcchhapp://main'
+      location.href = url + '?vtime=' + new Date().getTime();
+      console.log('ios_new_url',url)
+      console.log('window.location.href',window.location)
+      toApp33()
     };
     function toApp1() {
       var url = 'zhsh://'+'gd'+'.10086' + '.cn';
@@ -68,8 +85,39 @@
       url = url + '?vtime=' + new Date().getTime();
       console.log('ios_old_url2',url)
       setTimeout(function (){
-        console.log('toApp3')
+        console.log('toApp3',url)
         location.href = url;
+      },2000);
+    }
+    function toApp31() {
+      var url = 'gmcchhapp://main';
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('ios_old_url2',url)
+      setTimeout(function (){
+        console.log('toApp31',url)
+        // location.href = url;
+        window.open(url)
+      },2000);
+    }
+    function toApp32() {
+      var url = 'gmcchhapp://main';
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('ios_old_url2',url)
+      setTimeout(function (){
+        console.log('toApp32',url)
+        // location.href = url;
+        top.location =  url;
+      },2000);
+    }
+
+    function toApp33() {
+      var url = 'gmcchhapp://main';
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('ios_old_url2',url)
+      setTimeout(function (){
+        console.log('toApp33',url)
+        // location.href = url;
+        self.location =  url;
       },2000);
     }
     function handleJumpAppTimeout (fn) {
