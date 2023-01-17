@@ -27,6 +27,9 @@
   <button onclick="toAppc()">唤起self</button>
   <br>
   <br>
+  <button onclick="toAppd()">唤起iframe</button>
+  <br>
+  <br>
   <br>
   <button onclick="toApp1()">唤起新版</button>
   <br>
@@ -67,6 +70,14 @@
       console.log('ios_new_url',url)
       console.log('window.location.href',window.location)
       toApp33()
+    };
+    function toAppd() {
+      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
+      var OldUrl = 'gmcchhapp://main'
+      location.href = url + '?vtime=' + new Date().getTime();
+      console.log('ios_new_url',url)
+      console.log('window.location.href',window.location)
+      toApp34()
     };
     function toApp1() {
       var url = 'zhsh://'+'gd'+'.10086' + '.cn';
@@ -120,6 +131,16 @@
         self.location =  url;
       },2000);
     }
+    function toApp34() {
+      var url = 'gmcchhapp://main';
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('ios_old_url2',url)
+      setTimeout(function (){
+        console.log('toApp34',url)
+        // location.href = url;
+        handleJumpAppAddIframe(url);
+      },2000);
+    }
     function handleJumpAppTimeout (fn) {
       console.log('handleJumpAppTimeout')
       var timeOut = 2000;
@@ -130,6 +151,13 @@
           fn();
         }
       },timeOut);
+    };
+
+    function handleJumpAppAddIframe (url) {
+      var ifr = document.createElement('iframe');
+      ifr.src = url;
+      ifr.style.display = 'none';
+      document.body.appendChild(ifr);
     };
   </script>
 </body>
