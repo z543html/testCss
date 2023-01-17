@@ -15,7 +15,7 @@
 </head>
 <body>
   <div>测试</div>
-  <button onclick="toApp()">唤起2</button>
+  <button onclick="toApp()">唤起3</button>
   <br>
   <br>
   <br>
@@ -32,6 +32,10 @@
       handleJumpAppTimeout(function () {
         console.log('ios_old_url',OldUrl)
         location.href = OldUrl + '?vtime=' + new Date().getTime();
+        setTimeout(function (){
+          console.log('setTimeout2')
+          location.href = OldUrl + '?vtime=' + new Date().getTime();
+        },2000);
       })
 
     };
@@ -51,7 +55,7 @@
       console.log('handleJumpAppTimeout')
       var timeOut = 2000;
       var timer,start = new Date().getTime();
-      timer = setTimeout(function (){
+      setTimeout(function (){
         console.log('setTimeout2')
         if (fn && typeof fn === 'function') {
           fn();
