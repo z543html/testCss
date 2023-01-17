@@ -15,7 +15,7 @@
 </head>
 <body>
   <div>测试</div>
-  <button onclick="toApp()">唤起3</button>
+  <button onclick="toApp()">唤起4</button>
   <br>
   <br>
   <br>
@@ -23,19 +23,25 @@
   <br>
   <br>
   <button onclick="toApp2()">唤起旧版</button>
+  <br>
+  <br>
+  <button onclick="toApp3()">唤起旧版2</button>
   <script>
     function toApp() {
       var url = 'zhsh://'+'gd'+'.10086' + '.cn';
       var OldUrl = 'gmcchhapp://main'
       location.href = url + '?vtime=' + new Date().getTime();
       console.log('ios_new_url',url)
+      console.log('window.location.href',window.location.href)
       handleJumpAppTimeout(function () {
         console.log('ios_old_url',OldUrl)
-        location.href = OldUrl + '?vtime=' + new Date().getTime();
+        window.location.href = OldUrl + '?vtime=' + new Date().getTime();
+        console.log('document.readyState',document.readyState)
         setTimeout(function (){
           console.log('setTimeout2')
-          location.href = OldUrl + '?vtime=' + new Date().getTime();
-        },2000);
+          console.log('document.readyState1',document.readyState)
+          window.location.href = OldUrl + '?vtime=' + new Date().getTime();
+        },100);
       })
 
     };
@@ -50,6 +56,15 @@
       url = url + '?vtime=' + new Date().getTime();
       console.log('ios_old_url2',url)
       location.href = url;
+    }
+    function toApp3() {
+      var url = 'gmcchhapp://main';
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('ios_old_url2',url)
+      setTimeout(function (){
+        console.log('toApp3')
+        location.href = url;
+      },2000);
     }
     function handleJumpAppTimeout (fn) {
       console.log('handleJumpAppTimeout')
