@@ -1,273 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
-    />
-    <title>Document</title>
-    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.9.0/vconsole.min.js"></script>
     <script>
-      // VConsole will be exported to `window.VConsole` by default.
-      var vConsole = new window.VConsole();
-      console.log('vConsole', vConsole);
+        // init vConsole
+        var vConsole = new VConsole();
+        console.log('Hello world');
     </script>
-    <script>
-      // (function(win) {
-      // 		var docEl = win.document.documentElement,
-      // 			tid;
-      // 		function refreshRem() {
-      // 			var width = docEl.getBoundingClientRect().width;
-      //       var documentWidth = document.documentElement.clientWidth;
-      //       var w=window.screen.width;
+</head>
+<body>
+  <div>测试</div>
+  <button onclick="toApp()">唤起</button>
+  <script>
+    function toApp() {
+      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
+      var OldUrl = 'gmcchhapp://main'
+      location.href = url + '?vtime=' + new Date().getTime();
+      console.log('ios_new_url',url)
+      handleJumpAppTimeout(function () {
+        console.log('ios_old_url',OldUrl)
+        location.href = OldUrl + '?vtime=' + new Date().getTime();
+      })
 
-      // 			console.log("getBoundingClientRect输出屏宽",width);
-      //       console.log("clientWidth输出屏宽",documentWidth);
-      //       console.log("screen输出屏宽",w)
-
-      // 			var rem = width / 750 * 100; //以750px为原稿，除以100可得各元素的rem
-      //       console.log('rem',rem)
-      // 			docEl.style.fontSize = rem + "px";
-      // 			var actualSize = parseFloat(window.getComputedStyle(docEl)["font-size"]);
-      // 			//console.log("获取")
-      // 			//console.log(actualSize)
-      // 			if (actualSize !== rem) {
-      // 				var remScaled = rem / (actualSize / rem);
-      // 				docEl.style.fontSize = remScaled + "px"
-      // 			}
-      // 		}
-      // 	win.dbcRefresh=function dbcRefresh() {
-      // 			clearTimeout(tid);
-      // 			tid = setTimeout(refreshRem, 100)
-      // 		}
-      // 		win.addEventListener("resize", function() {
-      // 			console.log("resize")
-      // 			dbcRefresh()
-      // 		}, false);
-      // 		win.addEventListener("pageshow", function(e) {
-      // 			console.log("pageshow")
-      // 			if (e.persisted) {
-      // 				dbcRefresh()
-      // 			}
-      // 		}, false);
-      // 		refreshRem();
-      // 	})(window);
-      (function (win, lib) {
-        var doc = win.document;
-        var docEl = doc.documentElement;
-        var metaEl = doc.querySelector('meta[name="viewport"]');
-        var flexibleEl = doc.querySelector('meta[name="flexible"]');
-        var dpr = 0;
-        var scale = 0;
-        var tid;
-        var flexible = lib.flexible || (lib.flexible = {});
-
-        if (metaEl) {
-          console.warn('将根据已有的meta标签来设置缩放比例');
-          var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
-          if (match) {
-            scale = parseFloat(match[1]);
-            dpr = parseInt(1 / scale);
-          }
-        } else if (flexibleEl) {
-          var content = flexibleEl.getAttribute('content');
-          if (content) {
-            var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
-            var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
-            if (initialDpr) {
-              dpr = parseFloat(initialDpr[1]);
-              scale = parseFloat((1 / dpr).toFixed(2));
+    };
+    function handleJumpAppTimeout (fn) {
+      var timeOut = 2000;
+      var timer,start = new Date().getTime();
+      timer = setTimeout(function (){
+          let end = new Date().getTime();
+          if(end - start > timeOut + 1000){
+            console.log('clearTimeout')
+            clearTimeout(timer);
+          }else {
+            var hidden = window.document.hidden || window.document.mozHidden || window.document.msHidden ||window.document.webkitHidden;
+            console.log('setTimeout1')
+            if(typeof hidden =="undefined" || hidden == false){
+              console.log('setTimeout2')
+              if (fn && typeof fn === 'function') {
+                fn();
+              }
             }
-            if (maximumDpr) {
-              dpr = parseFloat(maximumDpr[1]);
-              scale = parseFloat((1 / dpr).toFixed(2));
-            }
-          }
-        }
-
-        if (!dpr && !scale) {
-          var isAndroid = win.navigator.appVersion.match(/android/gi);
-          var isIPhone = win.navigator.appVersion.match(/iphone/gi);
-          var devicePixelRatio = win.devicePixelRatio;
-          if (isIPhone) {
-            // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
-            if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
-              dpr = 3;
-            } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
-              dpr = 2;
-            } else {
-              dpr = 1;
-            }
-          } else {
-            // 其他设备下，仍旧使用1倍的方案
-            dpr = 1;
-          }
-          scale = 1 / dpr;
-        }
-
-        docEl.setAttribute('data-dpr', dpr);
-        if (!metaEl) {
-          metaEl = doc.createElement('meta');
-          metaEl.setAttribute('name', 'viewport');
-          metaEl.setAttribute(
-            'content',
-            'initial-scale=' +
-              scale +
-              ', maximum-scale=' +
-              scale +
-              ', minimum-scale=' +
-              scale +
-              ', user-scalable=no'
-          );
-          if (docEl.firstElementChild) {
-            docEl.firstElementChild.appendChild(metaEl);
-          } else {
-            var wrap = doc.createElement('div');
-            wrap.appendChild(metaEl);
-            doc.write(wrap.innerHTML);
-          }
-        }
-
-        function refreshRem() {
-          var width = docEl.getBoundingClientRect().width;
-          if (width / dpr > 540) {
-            width = width * dpr;
-          }
-          // var rem = width / 10;
-          var rem = width / 7.5;
-          docEl.style.fontSize = rem + 'px';
-          flexible.rem = win.rem = rem;
-        }
-
-        win.addEventListener(
-          'resize',
-          function () {
-            clearTimeout(tid);
-            tid = setTimeout(refreshRem, 300);
-          },
-          false
-        );
-        win.addEventListener(
-          'pageshow',
-          function (e) {
-            if (e.persisted) {
-              clearTimeout(tid);
-              tid = setTimeout(refreshRem, 300);
-            }
-          },
-          false
-        );
-
-        if (doc.readyState === 'complete') {
-          doc.body.style.fontSize = 12 * dpr + 'px';
-        } else {
-          doc.addEventListener(
-            'DOMContentLoaded',
-            function (e) {
-              doc.body.style.fontSize = 12 * dpr + 'px';
-            },
-            false
-          );
-        }
-
-        refreshRem();
-
-        flexible.dpr = win.dpr = dpr;
-        flexible.refreshRem = refreshRem;
-        flexible.rem2px = function (d) {
-          var val = parseFloat(d) * this.rem;
-          if (typeof d === 'string' && d.match(/rem$/)) {
-            val += 'px';
-          }
-          return val;
-        };
-        flexible.px2rem = function (d) {
-          var val = parseFloat(d) / this.rem;
-          if (typeof d === 'string' && d.match(/px$/)) {
-            val += 'rem';
-          }
-          return val;
-        };
-      })(window, window['lib'] || (window['lib'] = {}));
-
-
-
-      var width = window.document.documentElement.getBoundingClientRect().width;
-      var documentWidth = document.documentElement.clientWidth;
-      var w = window.screen.width;
-      var innerWidth = window.innerWidth;
-      var offsetWidth = document.documentElement.offsetWidth;
-      var availWidth = window.screen.availWidth;
-      console.log("getBoundingClientRect输出屏宽",width);
-      console.log("clientWidth输出屏宽",documentWidth);
-      console.log("screen输出屏宽",w)
-      console.log("innerWidth输出屏宽",innerWidth);
-      console.log("offsetWidth输出屏宽",offsetWidth);
-      console.log("availWidth输出屏宽",availWidth);
-
-      setTimeout(() => {
-        width = window.document.documentElement.getBoundingClientRect().width;
-        documentWidth = document.documentElement.clientWidth;
-        w = window.screen.width;
-        innerWidth = window.innerWidth;
-        offsetWidth = document.documentElement.offsetWidth;
-        availWidth = window.screen.availWidth;
-        console.log("2getBoundingClientRect输出屏宽",width);
-        console.log("2clientWidth输出屏宽",documentWidth);
-        console.log("2screen输出屏宽",w)
-        console.log("2innerWidth输出屏宽",innerWidth);
-        console.log("2offsetWidth输出屏宽",offsetWidth);
-        console.log("2availWidth输出屏宽",availWidth);
-      }, 3000);
-      function downloadImg(e) {
-        console.log('%O',e);
-        var url = e.src;
-        if (url) {
-          // 生成一个a元素
-          let a = document.createElement('a')
-          // 创建一个单击事件
-          let event = new MouseEvent('click')
-          // 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称
-          a.download = '分享图片'//name || Math.random().toString(16).substr(2, 8)
-          // 将生成的URL设置为a.href属性
-          a.href = url
-          // 触发a的单击事件
-          a.dispatchEvent(event)
-        }
-      }
-      console.log('navigator.userAgent',navigator.userAgent)
-      var browserRule = /^.*((iPhone)|(iPad)|(Safari))+.*$/;
-      if (browserRule.test(navigator.userAgent)) {
-          window.onpageshow = function(event) {
-              console.log('onpageshow',onpageshow)
-                  // window.location.reload()
           };
-      }
-    </script>
-    <style>
-      body,
-      html,
-      ul,
-      li {
-        margin: 0;
-        padding: 0;
-      }
-      .box {
-        width: 7.2rem;
-        height: 1rem;
-        margin: 0 auto;
-        background-color: blue;
-        font-size: 0.28rem;
-        color: yellow;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="box">我是盒子宽7.2rem</div>
-    <input type="text" value="12"/>
-    <a href="https://www.baidu.com">https://www.baidu.com</a>
-    <img onclick="downloadImg(this)" src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAPASURBVHgB7VlbUtswFD0KkH41zQ7wDkpXUHcFsAPCCgh/zBQSJ7TfhR2kOwgrKKyg6QrqrqD08dWhUe+VHEtynNhyHEJnODOK5Yek4+ur+wrwhPVCoA68k7v4g5B6Ac0YOPckYvqd4C+19+IbVkR1wufyNZEJ0UAHyJBcjJjG3GCKqCp5f8JMFLSgUBKtDokxEe/6Ei9PuCvbeI4+jejm3L2j6xPwp5dKij+S2V8kKrJH1/bo2MY88RF+4QSX4g61ET6XL+nJMbKfXtDnFRgoolGJBSN5QAQPqR1k7sSk42EZaRcT7sl9+h3Bls6MaCRuUAWRDIh0n1rHusov3MFQXC8bKkqQHWcm7dKkH1EHevKQfi9hC4M38oW4XTRkMeFTkkITn63JYjoPcba6aXLA0p7iE4y63SWkv+Q93sidhDdYU02yXrKMSMTE4o1aQ6Ot9gtzQFnCbA3sN/Yly4stWBDLSc82bpBwQDFhVgXXdHW9yPbkMVr4Su276vuQZvs+A3PQNr+A8I71ZoKsg/8Gi2BUKYIPhuJKWSB3LgcuYS3dTnq+47ngPEo5AwdbjpRD5QMsuISf4dh6eFxpk7FT0F4vztjZcuiRSbOlnHEy25nFQqs/RhVoG/oKq4ClfJ+Q1sHVYHbLSJjVAcrfa/zENTaFKdgGG4thWRwj4SaMrnAIWDIYSXEuP8wFRpK82IU4gS84LunLSfrFW2BroQRo63Bg9SfwRV4Ulx/ZlYXNIZh1GtbkgdX3391Y2aK4kBYHmUfYjVVj+GIoBtSEanVAwliohuHWwH8Gm7CtBgE2DYHdtD813AxhaamBeBSE7YQhnnVtCacXk/xr0zActF1WMIQbuHUe9gkP60ZEa9te97cxcYawTiKN7WthH5vC1Fl7YjuxrJUw8UOVwKUuCGftkX3LJdzAlTUozAug145TlVGH6XnTDcJcwqwWBQH02tHEYdrnBCIT4s47DoEjqx96pTlm3KU6yuTog20l0Vi1nAQi3432KfKSaeCyNO1+aOS7Zl1+ipMznXa/lbt4BMgnzLqcTbu3SLcz+dUmsDj44bR7W+1WQ5pztTPZxwZRHAoOSar3c5VLnWAuqYEthakxt5N5Su+PcrHrfP1LQ6oq5ohKpTeFpVJ29a2k1GoXw3n8QByhVsIz9JQ6RAvu6mK2yKRXHPnpYGpRQHVQVGJ1p/NFfm3XHyxZtrNn6/rLIAutJvvK75cNR9mLshpxCFCmYp87RR2IVCi6Ry/AZq+dBN/tJClgE8mbalKV5BMeEv8AkWU3lligmfYAAAAASUVORK5CYII=' />
-  </body>
+      },timeOut);
+    },
+  </script>
+</body>
 </html>
