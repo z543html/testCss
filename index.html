@@ -16,6 +16,13 @@
 <body>
   <div>测试</div>
   <button onclick="toApp()">唤起</button>
+  <br>
+  <br>
+  <br>
+  <button onclick="toApp1()">唤起新版</button>
+  <br>
+  <br>
+  <button onclick="toApp2()">唤起旧版</button>
   <script>
     function toApp() {
       var url = 'zhsh://'+'gd'+'.10086' + '.cn';
@@ -28,6 +35,18 @@
       })
 
     };
+    function toApp1() {
+      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('ios_new_url1',url)
+      location.href = url;
+    }
+    function toApp2() {
+      var url = 'gmcchhapp://main';
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('ios_old_url2',url)
+      location.href = url;
+    }
     function handleJumpAppTimeout (fn) {
       console.log('handleJumpAppTimeout')
       var timeOut = 2000;
