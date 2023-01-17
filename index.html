@@ -15,7 +15,7 @@
 </head>
 <body>
   <div>测试</div>
-  <button onclick="toApp()">唤起1</button>
+  <button onclick="toApp()">唤起2</button>
   <br>
   <br>
   <br>
@@ -52,11 +52,9 @@
       var timeOut = 2000;
       var timer,start = new Date().getTime();
       timer = setTimeout(function (){
-        if(typeof hidden =="undefined" || hidden == false){
-          console.log('setTimeout2')
-          if (fn && typeof fn === 'function') {
-            fn();
-          }
+        console.log('setTimeout2')
+        if (fn && typeof fn === 'function') {
+          fn();
         }
       },timeOut);
     };
