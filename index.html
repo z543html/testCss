@@ -30,6 +30,9 @@
   <button onclick="toAppd()">唤起iframe</button>
   <br>
   <br>
+  <button onclick="toAppf()">唤起click</button>
+  <br>
+  <br>
   <br>
   <button onclick="toApp1()">唤起新版</button>
   <br>
@@ -37,7 +40,7 @@
   <button onclick="toApp2()">唤起旧版</button>
   <br>
   <br>
-  <button onclick="toApp3()">唤起旧版2</button>
+  <button onclick="toApp3()" id="btn">唤起旧版2</button>
   <script>
     function toApp() {
       var url = 'zhsh://'+'gd'+'.10086' + '.cn';
@@ -78,6 +81,15 @@
       console.log('ios_new_url',url)
       console.log('window.location.href',window.location)
       toApp34()
+    };
+    function toAppf() {
+      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
+      var OldUrl = 'gmcchhapp://main'
+      location.href = url + '?vtime=' + new Date().getTime();
+      console.log('ios_new_url',url)
+      console.log('window.location.href',window.location)
+      var dd = document.getElementById('btn')
+      btn.click();
     };
     function toApp1() {
       var url = 'zhsh://'+'gd'+'.10086' + '.cn';
