@@ -43,6 +43,9 @@
   <button onclick="toAppg()">唤起replace</button> 说明：先新，延时2秒后location.replace
   <br>
   <br>
+  <button onclick="toAppj()">单独唤起click'a'标签旧版</button> 说明：单独a标签唤起旧版
+  <br>
+  <br>
   <button onclick="toApph()">全部唤起click'a'标签</button> 说明：先新'a'标签，延时2秒后'a'标签
   <br>
   <br>
@@ -105,7 +108,7 @@
     function toApph() {
       evokeByTagA(url);
       setTimeout(function (){
-        toJumpReplace(OldUrl);
+        evokeByTagA(OldUrl);
       },2000);
     };
     function toAppi() {
@@ -114,7 +117,9 @@
         toJump(OldUrl);
       },2000);
     };
-    
+    function toAppj() {
+      evokeByTagA(OldUrl);
+    };
 
     // a标签
     function evokeByTagA(uri) {
