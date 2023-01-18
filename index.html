@@ -15,162 +15,118 @@
 </head>
 <body>
   <div>测试</div>
-  <button onclick="toApp()">唤起6</button>
+  <button onclick="toApp()">模拟唤起</button>  说明：先location调用新版，延时2秒后location调用旧版
   <br>
   <br>
-  <button onclick="toAppa()">唤起open</button>
+  <button onclick="toApp1()">直接location唤起新版</button> 
   <br>
   <br>
-  <button onclick="toAppb()">唤起top</button>
+  <button onclick="toApp2()">直接location唤起旧版</button> 
   <br>
   <br>
-  <button onclick="toAppc()">唤起self</button>
-  <br>
-  <br>
-  <button onclick="toAppd()">唤起iframe</button>
-  <br>
-  <br>
-  <button onclick="toAppf()">唤起click</button>
+  <button onclick="toApp3()">延时2秒后location唤起旧版</button>
   <br>
   <br>
   <br>
-  <button onclick="toApp1()">唤起新版</button>
+  <button onclick="toAppb()">唤起top</button> 说明：先新，延时2秒后top.location旧版
   <br>
   <br>
-  <button onclick="toApp2()">唤起旧版</button>
+  <button onclick="toAppc()">唤起self</button> 说明：先新，延时2秒后self.location旧版
   <br>
   <br>
-  <button onclick="toApp3()" id="btn">唤起旧版2</button>
+  <button onclick="toAppd()">唤起iframe</button> 说明：先新，延时2秒后iframe旧版
+  <br>
+  <br>
+  <button onclick="toAppf()">唤起click'a'标签</button> 说明：先新，延时2秒后a标签旧版
+  <br>
+  <br>
+  <br>
+  
   <script>
+    var url = 'zhsh://'+'gd'+'.10086' + '.cn';
+    var OldUrl = 'gmcchhapp://main';
+    console.log('window.location.href',window.location)
+    // 先新，延时后旧
     function toApp() {
-      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
-      var OldUrl = 'gmcchhapp://main'
-      location.href = url + '?vtime=' + new Date().getTime();
-      console.log('ios_new_url',url)
-      console.log('window.location.href',window.location)
+      toApp1();
       toApp3()
     };
-    function toAppa() {
-      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
-      var OldUrl = 'gmcchhapp://main'
-      location.href = url + '?vtime=' + new Date().getTime();
-      console.log('ios_new_url',url)
-      console.log('window.location.href',window.location)
-      toApp31()
-    };
+    // 新
+    function toApp1() {
+      toJump(url);
+    }
+    // 旧
+    function toApp2() {
+      toJump(OldUrl);
+    }
+    // 延时2秒旧
+    function toApp3() {
+      setTimeout(function (){
+        toApp2();
+      },2000);
+    }
+    // 先新，延时2秒后top.location
     function toAppb() {
-      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
-      var OldUrl = 'gmcchhapp://main'
-      location.href = url + '?vtime=' + new Date().getTime();
-      console.log('ios_new_url',url)
-      console.log('window.location.href',window.location)
-      toApp32()
+      toApp1()
+      setTimeout(function (){
+        toJumpTop(OldUrl);
+      },2000);
     };
     function toAppc() {
-      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
-      var OldUrl = 'gmcchhapp://main'
-      location.href = url + '?vtime=' + new Date().getTime();
-      console.log('ios_new_url',url)
-      console.log('window.location.href',window.location)
-      toApp33()
+      toApp1()
+      setTimeout(function (){
+        toJumpSelf(OldUrl);
+      },2000);
     };
     function toAppd() {
-      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
-      var OldUrl = 'gmcchhapp://main'
-      location.href = url + '?vtime=' + new Date().getTime();
-      console.log('ios_new_url',url)
-      console.log('window.location.href',window.location)
-      toApp34()
+      toApp1()
+      setTimeout(function (){
+        handleJumpAppAddIframe(OldUrl);
+      },2000);
     };
     function toAppf() {
-      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
-      var OldUrl = 'gmcchhapp://main'
-      location.href = url + '?vtime=' + new Date().getTime();
-      console.log('ios_new_url',url)
-      console.log('window.location.href',window.location)
-      var dd = document.getElementById('btn')
-      btn.click();
-    };
-    function toApp1() {
-      var url = 'zhsh://'+'gd'+'.10086' + '.cn';
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('ios_new_url1',url)
-      location.href = url;
-    }
-    function toApp2() {
-      var url = 'gmcchhapp://main';
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('ios_old_url2',url)
-      location.href = url;
-    }
-    function toApp3() {
-      var url = 'gmcchhapp://main';
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('ios_old_url2',url)
+      toApp1()
       setTimeout(function (){
-        console.log('toApp3',url)
-        location.href = url;
+        evokeByTagA(OldUrl);
       },2000);
-    }
-    function toApp31() {
-      var url = 'gmcchhapp://main';
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('ios_old_url2',url)
-      setTimeout(function (){
-        console.log('toApp31',url)
-        // location.href = url;
-        window.open(url)
-      },2000);
-    }
-    function toApp32() {
-      var url = 'gmcchhapp://main';
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('ios_old_url2',url)
-      setTimeout(function (){
-        console.log('toApp32',url)
-        // location.href = url;
-        top.location =  url;
-      },2000);
-    }
-
-    function toApp33() {
-      var url = 'gmcchhapp://main';
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('ios_old_url2',url)
-      setTimeout(function (){
-        console.log('toApp33',url)
-        // location.href = url;
-        self.location =  url;
-      },2000);
-    }
-    function toApp34() {
-      var url = 'gmcchhapp://main';
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('ios_old_url2',url)
-      setTimeout(function (){
-        console.log('toApp34',url)
-        // location.href = url;
-        handleJumpAppAddIframe(url);
-      },2000);
-    }
-    function handleJumpAppTimeout (fn) {
-      console.log('handleJumpAppTimeout')
-      var timeOut = 2000;
-      var timer,start = new Date().getTime();
-      setTimeout(function (){
-        console.log('setTimeout2')
-        if (fn && typeof fn === 'function') {
-          fn();
-        }
-      },timeOut);
     };
 
+    // a标签
+    function evokeByTagA(uri) {
+      var tagA = document.createElement('a');
+      tagA.setAttribute('href', uri);
+      tagA.style.display = 'none';
+      document.body.append(tagA);
+      tagA.click();
+      window.setTimeout(function() {
+        document.body.removeChild(tagA);
+      }, 3000)
+    }
+    // iframe
     function handleJumpAppAddIframe (url) {
       var ifr = document.createElement('iframe');
       ifr.src = url;
       ifr.style.display = 'none';
       document.body.appendChild(ifr);
     };
+    // location.href
+    function toJump(url) {
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('jump_url',url)
+      location.href = url;
+    }
+    // top.location
+    function toJumpTop(url) {
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('jump_url',url)
+      top.location = url;
+    }
+    // self.location
+    function toJumpSelf(url) {
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('jump_url',url)
+      self.location = url;
+    }
   </script>
 </body>
 </html>
