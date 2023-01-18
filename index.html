@@ -15,7 +15,10 @@
 </head>
 <body>
   <div>测试</div>
-  <button onclick="toApp()">模拟唤起</button>  说明：先location调用新版，延时2秒后location调用旧版
+  <button onclick="toAppk()">模拟唤起</button>  说明：先location调用新版，延时2秒后location调用旧版
+  <br>
+  <br>
+  <button onclick="toApp()">模拟唤起10s</button>  说明：先location调用新版，延时10秒后location调用旧版
   <br>
   <br>
   <button onclick="toApp1()">直接location唤起新版</button> 
@@ -28,10 +31,10 @@
   <br>
   <br>
   <br>
-  <button onclick="toAppb()">唤起top</button> 说明：先新，延时2秒后top.location旧版
+  <!-- <button onclick="toAppb()">唤起top</button> 说明：先新，延时2秒后top.location旧版
   <br>
   <br>
-  <button onclick="toAppc()">唤起self</button> 说明：先新，延时2秒后self.location旧版
+  <button onclick="toAppc()">唤起self</button> 说明：先新，延时2秒后self.location旧版 -->
   <br>
   <br>
   <button onclick="toAppd()">唤起iframe</button> 说明：先新，延时2秒后iframe旧版
@@ -60,6 +63,12 @@
       toApp1();
       toApp3()
     };
+    function toAppk(params) {
+      toApp1();
+      setTimeout(function (){
+        toApp2();
+      },10000);
+    }
     // 新
     function toApp1() {
       toJump(url);
