@@ -40,8 +40,14 @@
   <button onclick="toAppf()">唤起click'a'标签</button> 说明：先新，延时2秒后a标签旧版
   <br>
   <br>
+  <button onclick="toAppg()">唤起replace</button> 说明：先新，延时2秒后location.replace
   <br>
-  
+  <br>
+  <button onclick="toApph()">全部唤起click'a'标签</button> 说明：先新'a'标签，延时2秒后'a'标签
+  <br>
+  <br>
+  <button onclick="toAppi()">先唤起click'a'标签，后location旧版</button> 说明：先新'a'标签，延时2秒后location旧版
+  <br>
   <script>
     var url = 'zhsh://'+'gd'+'.10086' + '.cn';
     var OldUrl = 'gmcchhapp://main';
@@ -90,6 +96,25 @@
         evokeByTagA(OldUrl);
       },2000);
     };
+    function toAppg() {
+      toApp1()
+      setTimeout(function (){
+        toJumpReplace(OldUrl);
+      },2000);
+    };
+    function toApph() {
+      evokeByTagA(url);
+      setTimeout(function (){
+        toJumpReplace(OldUrl);
+      },2000);
+    };
+    function toAppi() {
+      evokeByTagA(url);
+      setTimeout(function (){
+        toJump(OldUrl);
+      },2000);
+    };
+    
 
     // a标签
     function evokeByTagA(uri) {
@@ -126,6 +151,12 @@
       url = url + '?vtime=' + new Date().getTime();
       console.log('jump_url',url)
       self.location = url;
+    }
+    // location.replace
+    function toJumpReplace(url) {
+      url = url + '?vtime=' + new Date().getTime();
+      console.log('jump_url',url)
+      window.location.replace = url;
     }
   </script>
 </body>
