@@ -35,7 +35,7 @@
   <br>
   <br>
   <button onclick="toAppc()">唤起self</button> 说明：先新，延时2秒后self.location旧版 -->
-  <br>
+  <!-- <br>
   <br>
   <button onclick="toAppd()">唤起iframe</button> 说明：先新，延时2秒后iframe旧版
   <br>
@@ -52,8 +52,16 @@
   <button onclick="toApph()">全部唤起click'a'标签</button> 说明：先新'a'标签，延时2秒后'a'标签
   <br>
   <br>
-  <button onclick="toAppi()">先唤起click'a'标签，后location旧版</button> 说明：先新'a'标签，延时2秒后location旧版
+  <button onclick="toAppi()">先唤起click'a'标签，后location旧版</button> 说明：先新'a'标签，延时2秒后location旧版 -->
   <br>
+  <br>
+  <br>
+  <button onclick="toAppL()">新方法</button>
+  <br>
+  <br>
+  <button onclick="toAppL2()">新方法2</button>
+  <br>
+  
   <script>
     var url = 'zhsh://'+'gd'+'.10086' + '.cn';
     var OldUrl = 'gmcchhapp://main';
@@ -171,6 +179,62 @@
       url = url + '?vtime=' + new Date().getTime();
       console.log('jump_url',url)
       window.location.replace = url;
+    }
+
+    function toAppL() {
+      toApp1()
+      setTimeout(function (){
+        toApp2();
+        const initialTime = new Date();
+        let counter = 0;
+        let waitTime = 0;
+        const checkOpen = setInterval(() => {
+            counter++;
+            waitTime = new Date() - initialTime;    
+        if (waitTime > 2500) {
+                clearInterval(checkOpen);
+                cb();
+            }    
+        if (counter < 100) return;    
+        const hide = document.hidden || document.webkitHidden;    
+        if (!hide) {
+                cb(); // 唤端失败的回调函数
+            }
+        }, 20);
+      },2000);
+    };
+    
+    function toAppL2(params) {
+      toApp1()
+      setTimeout(function (){
+        toApp2();
+        const initialTime = new Date();
+        let counter = 0;
+        let waitTime = 0;
+        const checkOpen = setInterval(() => {
+            counter++;
+            waitTime = new Date() - initialTime;    
+        if (waitTime > 2500) {
+                clearInterval(checkOpen);
+                cb2();
+            }    
+        if (counter < 100) return;    
+        const hide = document.hidden || document.webkitHidden;    
+        if (!hide) {
+              cb2(); // 唤端失败的回调函数
+            }
+        }, 20);
+      },2000);
+    }
+
+    function cb () {
+        localStorage.setItem("oppo", "1")
+        window.location = "index.html"
+    }
+
+    function cb2 () {
+        localStorage.setItem("oppo", "1")
+        location.reload();
     }
   </script>
 </body>
