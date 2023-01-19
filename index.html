@@ -14,7 +14,7 @@
     
 </head>
 <body>
-  <div>测试</div>
+  <div>测试3</div>
   <button onclick="toAppk()">模拟唤起</button>  说明：先location调用新版，延时2秒后location调用旧版
   <br>
   <br>
@@ -66,6 +66,11 @@
     var url = 'zhsh://'+'gd'+'.10086' + '.cn';
     var OldUrl = 'gmcchhapp://main';
     console.log('window.location.href',window.location)
+    var isoppo = localStorage.getItem("oppo");
+    if("1" == isoppo) {
+        localStorage.removeItem("oppo");
+        toApp2();
+    }
     // 先新，延时后旧
     function toApp() {
       toApp1();
