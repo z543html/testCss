@@ -15,19 +15,19 @@
 </head>
 <body>
   <div>测试3</div>
-  <button onclick="toAppk()">模拟唤起</button>  说明：先location调用新版，延时2秒后location调用旧版
+  <button onclick="toApp()">模拟唤起</button>  说明：先location调用新版，延时2秒后location调用旧版
+  <!-- <br>
   <br>
-  <br>
-  <button onclick="toApp()">模拟唤起10s</button>  说明：先location调用新版，延时10秒后location调用旧版
+  <button onclick="toAppk()">模拟唤起10s</button>  说明：先location调用新版，延时10秒后location调用旧版 -->
   <br>
   <br>
   <button onclick="toApp1()">直接location唤起新版</button> 
   <br>
   <br>
   <button onclick="toApp2()">直接location唤起旧版</button> 
+  <!-- <br>
   <br>
-  <br>
-  <button onclick="toApp3()">延时2秒后location唤起旧版</button>
+  <button onclick="toApp3()">延时2秒后location唤起旧版</button> -->
   <br>
   <br>
   <br>
@@ -60,6 +60,12 @@
   <br>
   <br>
   <button onclick="toAppL2()">新方法2</button>
+  <br>
+  <br>
+  <button onclick="toAppL3()">新方法3</button>
+  <br>
+  <br>
+  <button onclick="toAppL4()">新方法4</button>
   <br>
   
   <script>
@@ -213,6 +219,48 @@
       toApp1()
       setTimeout(function (){
         toApp2();
+        const initialTime = new Date();
+        let counter = 0;
+        let waitTime = 0;
+        const checkOpen = setInterval(() => {
+            counter++;
+            waitTime = new Date() - initialTime;    
+        if (waitTime > 2500) {
+                clearInterval(checkOpen);
+                cb2();
+            }    
+        if (counter < 100) return;    
+        const hide = document.hidden || document.webkitHidden;    
+        if (!hide) {
+              cb2(); // 唤端失败的回调函数
+            }
+        }, 20);
+      },2000);
+    }
+    function toAppL3() {
+      toApp1()
+      setTimeout(function (){
+        const initialTime = new Date();
+        let counter = 0;
+        let waitTime = 0;
+        const checkOpen = setInterval(() => {
+            counter++;
+            waitTime = new Date() - initialTime;    
+        if (waitTime > 2500) {
+                clearInterval(checkOpen);
+                cb();
+            }    
+        if (counter < 100) return;    
+        const hide = document.hidden || document.webkitHidden;    
+        if (!hide) {
+                cb(); // 唤端失败的回调函数
+            }
+        }, 20);
+      },2000);
+    };
+    function toAppL4(params) {
+      toApp1()
+      setTimeout(function (){
         const initialTime = new Date();
         let counter = 0;
         let waitTime = 0;
