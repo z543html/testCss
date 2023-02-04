@@ -1,294 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.9.0/vconsole.min.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+    <title>Document</title>
+    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
     <script>
-        // init vConsole
-        var vConsole = new VConsole();
-        console.log('Hello world');
+      // VConsole will be exported to `window.VConsole` by default.
+      var vConsole = new window.VConsole();
+      console.log('vConsole', vConsole);
     </script>
-    
-</head>
-<body>
-  <div>测试3</div>
-  <button onclick="toApp()">模拟唤起</button>  说明：先location调用新版，延时2秒后location调用旧版
-  <!-- <br>
-  <br>
-  <button onclick="toAppk()">模拟唤起10s</button>  说明：先location调用新版，延时10秒后location调用旧版 -->
-  <br>
-  <br>
-  <button onclick="toApp1()">直接location唤起新版</button> 
-  <br>
-  <br>
-  <button onclick="toApp2()">直接location唤起旧版</button> 
-  <!-- <br>
-  <br>
-  <button onclick="toApp3()">延时2秒后location唤起旧版</button> -->
-  <br>
-  <br>
-  <br>
-  <!-- <button onclick="toAppb()">唤起top</button> 说明：先新，延时2秒后top.location旧版
-  <br>
-  <br>
-  <button onclick="toAppc()">唤起self</button> 说明：先新，延时2秒后self.location旧版 -->
-  <!-- <br>
-  <br>
-  <button onclick="toAppd()">唤起iframe</button> 说明：先新，延时2秒后iframe旧版
-  <br>
-  <br>
-  <button onclick="toAppf()">唤起click'a'标签</button> 说明：先新，延时2秒后a标签旧版
-  <br>
-  <br>
-  <button onclick="toAppg()">唤起replace</button> 说明：先新，延时2秒后location.replace
-  <br>
-  <br>
-  <button onclick="toAppj()">单独唤起click'a'标签旧版</button> 说明：单独a标签唤起旧版
-  <br>
-  <br>
-  <button onclick="toApph()">全部唤起click'a'标签</button> 说明：先新'a'标签，延时2秒后'a'标签
-  <br>
-  <br>
-  <button onclick="toAppi()">先唤起click'a'标签，后location旧版</button> 说明：先新'a'标签，延时2秒后location旧版 -->
-  <br>
-  <br>
-  <br>
-  <button onclick="toAppL()">新方法</button>
-  <br>
-  <br>
-  <button onclick="toAppL2()">新方法2</button>
-  <br>
-  <br>
-  <button onclick="toAppL3()">新方法3</button>
-  <br>
-  <br>
-  <button onclick="toAppL4()">新方法4</button>
-  <br>
-  
-  <script>
-    var url = 'zhsh://'+'gd'+'.10086' + '.cn';
-    var OldUrl = 'gmcchhapp://main';
-    console.log('window.location.href',window.location)
-    var isoppo = localStorage.getItem("oppo");
-    if("1" == isoppo) {
-        localStorage.removeItem("oppo");
-        toApp2();
-    }
-    // 先新，延时后旧
-    function toApp() {
-      toApp1();
-      toApp3()
-    };
-    function toAppk(params) {
-      toApp1();
-      setTimeout(function (){
-        toApp2();
-      },10000);
-    }
-    // 新
-    function toApp1() {
-      toJump(url);
-    }
-    // 旧
-    function toApp2() {
-      toJump(OldUrl);
-    }
-    // 延时2秒旧
-    function toApp3() {
-      setTimeout(function (){
-        toApp2();
-      },2000);
-    }
-    // 先新，延时2秒后top.location
-    function toAppb() {
-      toApp1()
-      setTimeout(function (){
-        toJumpTop(OldUrl);
-      },2000);
-    };
-    function toAppc() {
-      toApp1()
-      setTimeout(function (){
-        toJumpSelf(OldUrl);
-      },2000);
-    };
-    function toAppd() {
-      toApp1()
-      setTimeout(function (){
-        handleJumpAppAddIframe(OldUrl);
-      },2000);
-    };
-    function toAppf() {
-      toApp1()
-      setTimeout(function (){
-        evokeByTagA(OldUrl);
-      },2000);
-    };
-    function toAppg() {
-      toApp1()
-      setTimeout(function (){
-        toJumpReplace(OldUrl);
-      },2000);
-    };
-    function toApph() {
-      evokeByTagA(url);
-      setTimeout(function (){
-        evokeByTagA(OldUrl);
-      },2000);
-    };
-    function toAppi() {
-      evokeByTagA(url);
-      setTimeout(function (){
-        toJump(OldUrl);
-      },2000);
-    };
-    function toAppj() {
-      evokeByTagA(OldUrl);
-    };
+    <script>
+      // (function(win) {
+      // 		var docEl = win.document.documentElement,
+      // 			tid;
+      // 		function refreshRem() {
+      // 			var width = docEl.getBoundingClientRect().width;
+      //       var documentWidth = document.documentElement.clientWidth;
+      //       var w=window.screen.width;
 
-    // a标签
-    function evokeByTagA(uri) {
-      var tagA = document.createElement('a');
-      tagA.setAttribute('href', uri);
-      tagA.style.display = 'none';
-      document.body.append(tagA);
-      tagA.click();
-      window.setTimeout(function() {
-        document.body.removeChild(tagA);
-      }, 3000)
-    }
-    // iframe
-    function handleJumpAppAddIframe (url) {
-      var ifr = document.createElement('iframe');
-      ifr.src = url;
-      ifr.style.display = 'none';
-      document.body.appendChild(ifr);
-    };
-    // location.href
-    function toJump(url) {
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('jump_url',url)
-      location.href = url;
-    }
-    // top.location
-    function toJumpTop(url) {
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('jump_url',url)
-      top.location = url;
-    }
-    // self.location
-    function toJumpSelf(url) {
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('jump_url',url)
-      self.location = url;
-    }
-    // location.replace
-    function toJumpReplace(url) {
-      url = url + '?vtime=' + new Date().getTime();
-      console.log('jump_url',url)
-      window.location.replace = url;
-    }
+      // 			console.log("getBoundingClientRect输出屏宽",width);
+      //       console.log("clientWidth输出屏宽",documentWidth);
+      //       console.log("screen输出屏宽",w)
 
-    function toAppL() {
-      toApp1()
-      setTimeout(function (){
-        toApp2();
-        const initialTime = new Date();
-        let counter = 0;
-        let waitTime = 0;
-        const checkOpen = setInterval(() => {
-            counter++;
-            waitTime = new Date() - initialTime;    
-        if (waitTime > 2500) {
-                clearInterval(checkOpen);
-                cb();
-            }    
-        if (counter < 100) return;    
-        const hide = document.hidden || document.webkitHidden;    
-        if (!hide) {
-                cb(); // 唤端失败的回调函数
-            }
-        }, 20);
-      },2000);
-    };
-    
-    function toAppL2(params) {
-      toApp1()
-      setTimeout(function (){
-        toApp2();
-        const initialTime = new Date();
-        let counter = 0;
-        let waitTime = 0;
-        const checkOpen = setInterval(() => {
-            counter++;
-            waitTime = new Date() - initialTime;    
-        if (waitTime > 2500) {
-                clearInterval(checkOpen);
-                cb2();
-            }    
-        if (counter < 100) return;    
-        const hide = document.hidden || document.webkitHidden;    
-        if (!hide) {
-              cb2(); // 唤端失败的回调函数
-            }
-        }, 20);
-      },2000);
-    }
-    function toAppL3() {
-      toApp1()
-      setTimeout(function (){
-        const initialTime = new Date();
-        let counter = 0;
-        let waitTime = 0;
-        const checkOpen = setInterval(() => {
-            counter++;
-            waitTime = new Date() - initialTime;    
-        if (waitTime > 2500) {
-                clearInterval(checkOpen);
-                cb();
-            }    
-        if (counter < 100) return;    
-        const hide = document.hidden || document.webkitHidden;    
-        if (!hide) {
-                cb(); // 唤端失败的回调函数
-            }
-        }, 20);
-      },2000);
-    };
-    function toAppL4(params) {
-      toApp1()
-      setTimeout(function (){
-        const initialTime = new Date();
-        let counter = 0;
-        let waitTime = 0;
-        const checkOpen = setInterval(() => {
-            counter++;
-            waitTime = new Date() - initialTime;    
-        if (waitTime > 2500) {
-                clearInterval(checkOpen);
-                cb2();
-            }    
-        if (counter < 100) return;    
-        const hide = document.hidden || document.webkitHidden;    
-        if (!hide) {
-              cb2(); // 唤端失败的回调函数
-            }
-        }, 20);
-      },2000);
-    }
+      // 			var rem = width / 750 * 100; //以750px为原稿，除以100可得各元素的rem
+      //       console.log('rem',rem)
+      // 			docEl.style.fontSize = rem + "px";
+      // 			var actualSize = parseFloat(window.getComputedStyle(docEl)["font-size"]);
+      // 			//console.log("获取")
+      // 			//console.log(actualSize)
+      // 			if (actualSize !== rem) {
+      // 				var remScaled = rem / (actualSize / rem);
+      // 				docEl.style.fontSize = remScaled + "px"
+      // 			}
+      // 		}
+      // 	win.dbcRefresh=function dbcRefresh() {
+      // 			clearTimeout(tid);
+      // 			tid = setTimeout(refreshRem, 100)
+      // 		}
+      // 		win.addEventListener("resize", function() {
+      // 			console.log("resize")
+      // 			dbcRefresh()
+      // 		}, false);
+      // 		win.addEventListener("pageshow", function(e) {
+      // 			console.log("pageshow")
+      // 			if (e.persisted) {
+      // 				dbcRefresh()
+      // 			}
+      // 		}, false);
+      // 		refreshRem();
+      // 	})(window);
+      (function (win, lib) {
+        var doc = win.document;
+        var docEl = doc.documentElement;
+        var metaEl = doc.querySelector('meta[name="viewport"]');
+        var flexibleEl = doc.querySelector('meta[name="flexible"]');
+        var dpr = 0;
+        var scale = 0;
+        var tid;
+        var flexible = lib.flexible || (lib.flexible = {});
 
-    function cb () {
-        localStorage.setItem("oppo", "1")
-        window.location = "index.html"
-    }
+        if (metaEl) {
+          console.warn('将根据已有的meta标签来设置缩放比例');
+          var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+          if (match) {
+            scale = parseFloat(match[1]);
+            dpr = parseInt(1 / scale);
+          }
+        } else if (flexibleEl) {
+          var content = flexibleEl.getAttribute('content');
+          if (content) {
+            var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+            var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+            if (initialDpr) {
+              dpr = parseFloat(initialDpr[1]);
+              scale = parseFloat((1 / dpr).toFixed(2));
+            }
+            if (maximumDpr) {
+              dpr = parseFloat(maximumDpr[1]);
+              scale = parseFloat((1 / dpr).toFixed(2));
+            }
+          }
+        }
 
-    function cb2 () {
-        localStorage.setItem("oppo", "1")
-        location.reload();
-    }
-  </script>
-</body>
+        if (!dpr && !scale) {
+          var isAndroid = win.navigator.appVersion.match(/android/gi);
+          var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+          var devicePixelRatio = win.devicePixelRatio;
+          if (isIPhone) {
+            // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+            if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+              dpr = 3;
+            } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+              dpr = 2;
+            } else {
+              dpr = 1;
+            }
+          } else {
+            // 其他设备下，仍旧使用1倍的方案
+            dpr = 1;
+          }
+          scale = 1 / dpr;
+        }
+
+        docEl.setAttribute('data-dpr', dpr);
+        if (!metaEl) {
+          metaEl = doc.createElement('meta');
+          metaEl.setAttribute('name', 'viewport');
+          metaEl.setAttribute(
+            'content',
+            'initial-scale=' +
+              scale +
+              ', maximum-scale=' +
+              scale +
+              ', minimum-scale=' +
+              scale +
+              ', user-scalable=no'
+          );
+          if (docEl.firstElementChild) {
+            docEl.firstElementChild.appendChild(metaEl);
+          } else {
+            var wrap = doc.createElement('div');
+            wrap.appendChild(metaEl);
+            doc.write(wrap.innerHTML);
+          }
+        }
+
+        function refreshRem() {
+          var width = docEl.getBoundingClientRect().width;
+          if (width / dpr > 540) {
+            width = width * dpr;
+          }
+          // var rem = width / 10;
+          var rem = width / 7.5;
+          docEl.style.fontSize = rem + 'px';
+          flexible.rem = win.rem = rem;
+        }
+
+        win.addEventListener(
+          'resize',
+          function () {
+            clearTimeout(tid);
+            tid = setTimeout(refreshRem, 300);
+          },
+          false
+        );
+        win.addEventListener(
+          'pageshow',
+          function (e) {
+            if (e.persisted) {
+              clearTimeout(tid);
+              tid = setTimeout(refreshRem, 300);
+            }
+          },
+          false
+        );
+
+        if (doc.readyState === 'complete') {
+          doc.body.style.fontSize = 12 * dpr + 'px';
+        } else {
+          doc.addEventListener(
+            'DOMContentLoaded',
+            function (e) {
+              doc.body.style.fontSize = 12 * dpr + 'px';
+            },
+            false
+          );
+        }
+
+        refreshRem();
+
+        flexible.dpr = win.dpr = dpr;
+        flexible.refreshRem = refreshRem;
+        flexible.rem2px = function (d) {
+          var val = parseFloat(d) * this.rem;
+          if (typeof d === 'string' && d.match(/rem$/)) {
+            val += 'px';
+          }
+          return val;
+        };
+        flexible.px2rem = function (d) {
+          var val = parseFloat(d) / this.rem;
+          if (typeof d === 'string' && d.match(/px$/)) {
+            val += 'rem';
+          }
+          return val;
+        };
+      })(window, window['lib'] || (window['lib'] = {}));
+
+
+
+      var width = window.document.documentElement.getBoundingClientRect().width;
+      var documentWidth = document.documentElement.clientWidth;
+      var w = window.screen.width;
+      var innerWidth = window.innerWidth;
+      var offsetWidth = document.documentElement.offsetWidth;
+      var availWidth = window.screen.availWidth;
+      console.log("getBoundingClientRect输出屏宽",width);
+      console.log("clientWidth输出屏宽",documentWidth);
+      console.log("screen输出屏宽",w)
+      console.log("innerWidth输出屏宽",innerWidth);
+      console.log("offsetWidth输出屏宽",offsetWidth);
+      console.log("availWidth输出屏宽",availWidth);
+
+      setTimeout(() => {
+        width = window.document.documentElement.getBoundingClientRect().width;
+        documentWidth = document.documentElement.clientWidth;
+        w = window.screen.width;
+        innerWidth = window.innerWidth;
+        offsetWidth = document.documentElement.offsetWidth;
+        availWidth = window.screen.availWidth;
+        console.log("2getBoundingClientRect输出屏宽",width);
+        console.log("2clientWidth输出屏宽",documentWidth);
+        console.log("2screen输出屏宽",w)
+        console.log("2innerWidth输出屏宽",innerWidth);
+        console.log("2offsetWidth输出屏宽",offsetWidth);
+        console.log("2availWidth输出屏宽",availWidth);
+      }, 3000);
+
+    </script>
+    <style>
+      body,
+      html,
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+      }
+      .box {
+        width: 7.2rem;
+        height: 1rem;
+        margin: 0 auto;
+        background-color: blue;
+        font-size: 0.28rem;
+        color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">我是盒子宽7.2rem</div>
+  </body>
 </html>
